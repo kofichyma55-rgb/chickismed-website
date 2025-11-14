@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chikis MedSupply Hub</title>
+    <style>
+        body {
+          margin: 0;
+          font-family: Arial, sans-serif;
+          background-color: white;
+          color: #003366;
+          text-align: center;
+          overflow-x: hidden;
+        }
+
+        /* ---------- HEADER ---------- */
+        header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #003366;
+          color: white;
+          padding: 15px 25px;
+          flex-wrap: wrap;
+        }
+
+        header h1 {
+          font-size: 2.5em;
+          margin: 0;
+          animation: swing 3s ease-in-out infinite alternate;
+          transform-origin: top center;
+        }
+
+        header .slogan {
+          font-size: 1.2em;
+          margin: 5px 0 0 0;
+          font-style: italic;
+          color: #e6f0ff;
+          animation: swing 3s ease-in-out infinite alternate;
+          transform-origin: top center;
+        }
+
+        @keyframes swing {
+          0% { transform: rotate(0deg); }
+          25% { transform: rotate(3deg); }
+          50% { transform: rotate(0deg); }
+          75% { transform: rotate(-3deg); }
+          100% { transform: rotate(0deg); }
+        }
+
+        header img {
+          height: 90px;
+        }
+
+        /* ---------- NAVIGATION ---------- */
+        nav {
+          display: flex;
+          gap: 20px;
+          justify-content: center;
+          align-items: center;
+          background-color: white;
+          padding: 15px 0;
+          flex-wrap: wrap;
+          position: relative;
+        }
+
+        nav a {
+          text-decoration: none;
+          color: #003366;
+          font-weight: bold;
+          font-size: 1.1em;
+          transition: color 0.3s ease;
+          cursor: pointer;
+        }
+
+        nav a:hover {
+          color: #007bff;
+        }
+
+        /* ---------- DROPDOWN MENU ---------- */
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 220px;
+          box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+          z-index: 1;
+          border-radius: 8px;
+          overflow: hidden;
+          top: 40px;
+          left: 0;
+        }
+
+        .dropdown-content button, .dropdown-content a {
+          width: 100%;
+          background-color: white;
+          color: #003366;
+          border: none;
+          padding: 10px;
+          text-align: left;
+          cursor: pointer;
+          font-weight: bold;
+          display: block;
+          text-decoration: none;
+        }
+
+        .dropdown-content button:hover,
+        .dropdown-content a:hover {
+          background-color: #e6f0ff;
+          color: #007bff;
+        }
+
+        /* ---------- INFO WINDOW ---------- */
+        .info-box {
+          display: none;
+          background-color: #f8faff;
+          color: #003366;
+          border: 2px solid #003366;
+          border-radius: 12px;
+          padding: 20px;
+          width: 60%;
+          margin: 20px auto;
+          text-align: justify;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------- MAIN IMAGE ---------- */
+        main {
+          width: 100%;
+          height: calc(100vh - 250px);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+        }
+
+        main img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          animation: zoomInOut 20s ease-in-out infinite;
+        }
+
+        @keyframes zoomInOut {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+          100% { transform: scale(1); }
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+          background-color: #003366;
+          color: white;
+          padding: 5px 0;
+          font-size: 0.9em;
+          position: relative;
+          overflow: hidden;
+        }
+
+        footer p {
+          position: relative;
+          display: inline-block;
+          animation: slideFooter 8s linear infinite;
+          white-space: nowrap;
+        }
+
+        @keyframes slideFooter {
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(-100%); }
+        }
+
+        /* ---------- FLOATING CONTACT BUTTON ---------- */
+        .contact-btn {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: #4da6ff;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 60px;
+          height: 60px;
+          font-size: 28px;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+          transition: transform 0.3s, background-color 0.3s;
+          z-index: 1000;
+        }
+
+        .contact-btn:hover {
+          transform: scale(1.1);
+          background-color: #3399ff;
+        }
+
+        /* ---------- CONTACT POPUP ---------- */
+        .contact-popup {
+          display: none;
+          position: fixed;
+          bottom: 90px;
+          right: 20px;
+          background-color: white;
+          color: #003366;
+          border: 2px solid #003366;
+          border-radius: 10px;
+          padding: 15px;
+          width: 240px;
+          text-align: left;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+          z-index: 1001;
+          animation: fadeIn 0.4s ease;
+        }
+
+        .contact-popup p {
+          margin: 8px 0;
+          font-size: 0.95em;
+        }
+
+        /* ---------- GREETING POPUP ---------- */
+        .greeting-popup {
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: #f8faff;
+          color: #003366;
+          border: 2px solid #003366;
+          border-radius: 12px;
+          padding: 25px 30px;
+          width: 300px;
+          text-align: center;
+          box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+          z-index: 2000;
+          animation: fadeIn 0.5s ease;
+        }
+
+        .greeting-popup h2 {
+          margin: 0 0 10px 0;
+          font-size: 1.3em;
+        }
+
+        .greeting-popup p {
+          font-size: 1em;
+          margin-bottom: 15px;
+        }
+
+        .greeting-popup button {
+          background-color: #4da6ff;
+          color: white;
+          border: none;
+          padding: 8px 15px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: background-color 0.3s;
+        }
+
+        .greeting-popup button:hover {
+          background-color: #3399ff;
+        }
+
+        /* ---------- RESPONSIVE DESIGN ---------- */
+        @media (max-width: 768px) {
+          header {
+            flex-direction: column;
+            text-align: center;
+          }
+
+          header h1 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+          }
+
+          header img {
+            height: 50px;
+          }
+
+          nav {
+            flex-direction: column;
+            gap: 10px;
+          }
+
+          main {
+            height: 70vh;
+          }
+
+          .info-box {
+            width: 85%;
+          }
+
+          footer {
+            font-size: 0.85em;
+          }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>Chicki's MedSupply Hub</h1>
+        <h2 class="slogan">Where Care Begins with Quality and Good Prices</h2>
+    </div>
+    <img src="chickislogo.jpeg" alt="Company Logo">
+</header>
+
+<nav>
+    <!-- Company Dropdown -->
+    <div class="dropdown">
+        <a class="dropdown-btn">Company</a>
+        <div class="dropdown-content">
+            <button onclick="showInfo('about')">About Us</button>
+            <button onclick="showInfo('vision')">Vision & Mission</button>
+        </div>
+    </div>
+
+    <!-- Products Dropdown -->
+    <div class="dropdown">
+        <a class="dropdown-btn">Products</a>
+        <div class="dropdown-content">
+            <a href="products.html#Aviche-Nubilizer">Aviche Nubilizer</a>
+            <a href="products.html#BP-monitor+ Thermometer+ Pulse-oximeter">BP Monitor+Thermometer+Pulse Oximeter</a>
+            <a href="products.html#Mini otoscope">Mini Otoscope </a>
+            <a href="products.html#ENT + opthalmoscope-diagnostic-kit">ENT+opthalmoscope diagnotic kit</a>
+            <a href="products.html#Ripple-matress">Ripple Matress</a>
+            <a href="products.html#Portable-Mesh-Nebulizer">Portable Mesh Nubilizer</a>
+            <a href="products.html#Medical-student-kit">Medical Sutdent Kit</a>
+            <a href="products.html#Litmann-Cardiology-IV-stethoscope">Litmann Cardiology IV stethoscope</a>
+            <a href="products.html#Sinocare-glucometer">Sinocare glucometer</a>
+            <a href="products.html#Litmann-Classic-III stethoscope">Litmann Clasic III stethoscope</a>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <img src="healthpic4.webp" alt="Medical Equipment Display">
+</main>
+
+<!-- INFO SECTIONS -->
+<div id="about" class="info-box">
+    <h2>About Us</h2>
+    <p>
+        Chikis MedSupply Hub is a trusted provider of high-quality medical equipment
+        and healthcare supplies. We serve hospitals, clinics, and individuals with
+        reliable products that promote better health outcomes. Our commitment to
+        quality and affordability has made us one of the most dependable suppliers
+        in the healthcare industry.
+    </p>
+</div>
+
+<div id="vision" class="info-box">
+    <h2>Vision & Mission</h2>
+    <p>
+        <strong>Vision:</strong> To become the leading source of trusted medical
+        equipment across Africa, improving healthcare delivery through innovation
+        and accessibility.<br><br>
+        <strong>Mission:</strong> To provide affordable, durable, and efficient
+        medical solutions that empower healthcare professionals to save lives
+        and improve patient care.
+    </p>
+</div>
+
+<div id="products" class="info-box">
+    <h2>Our Medical Equipment</h2>
+    <ul style="text-align:left; line-height:1.8;">
+        <li>Surgical Tapes</li>
+        <li>Wound Dressings</li>
+        <li>Sterile Eye Pad</li>
+        <li>Sterile Hemostatic Pressure Plaster</li>
+        <li>Sterile IV. Fixation Dressings</li>
+        <li>Injection Plaster</li>
+        <li>First Aid Plasters</li>
+        <li>Nasal Strips</li>
+        <li>Heat & Cold Plasters</li>
+        <li>ENT + ophthalmologist </li>
+    </ul>
+</div>
+
+<footer>
+    <p>Built by Orsoma Engineer's....      Designed by Mr. Ebenezer Orsoma Lartey</p>
+</footer>
+
+<!-- Floating Contact Button -->
+<button class="contact-btn" onclick="toggleContact()">💬</button>
+
+<!-- Contact Info Popup -->
+<div class="contact-popup" id="contactPopup">
+    <p><strong>WhatsApp:</strong> 0240412749</p>
+    <p><strong>Email:</strong> gkrampah57@gmail.com</p>
+    <p><strong>Call:</strong> 0240412749</p>
+</div>
+
+<!-- Greeting Popup -->
+<div id="greetingPopup" class="greeting-popup">
+    <h2>Welcome to Chicki's MedSupply Hub!</h2>
+    <p>We are delighted to have you here. Explore our quality medical equipments and enjoy great prices!</p>
+</div>
+
+<script>
+    // Show info section
+    function showInfo(sectionId) {
+      document.querySelectorAll('.info-box').forEach(box => box.style.display = 'none');
+      document.getElementById(sectionId).style.display = 'block';
+      window.scrollTo({ top: document.getElementById(sectionId).offsetTop - 50, behavior: 'smooth' });
+    }
+
+    // Dropdown click logic
+    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const dropdown = this.nextElementSibling;
+        const isVisible = dropdown.style.display === 'block';
+        document.querySelectorAll('.dropdown-content').forEach(dc => dc.style.display = 'none');
+        dropdown.style.display = isVisible ? 'none' : 'block';
+      });
+    });
+
+    // Close dropdowns when clicking outside
+    window.addEventListener('click', function () {
+      document.querySelectorAll('.dropdown-content').forEach(dc => dc.style.display = 'none');
+    });
+
+    // Toggle contact popup
+    function toggleContact() {
+      const popup = document.getElementById('contactPopup');
+      popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Show greeting on page load and auto fade out after 5 seconds
+    window.addEventListener('load', () => {
+        const greeting = document.getElementById('greetingPopup');
+        greeting.style.display = 'block';
+        setTimeout(() => {
+            greeting.style.transition = 'opacity 1s ease';
+            greeting.style.opacity = '0';
+            setTimeout(() => {
+                greeting.style.display = 'none';
+            }, 1000);
+        }, 5000); // 5000ms = 5 seconds
+    });
+
+    // Close greeting popup manually
+    function closeGreeting() {
+        const greeting = document.getElementById('greetingPopup');
+        greeting.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
